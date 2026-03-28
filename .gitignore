@@ -4,3 +4,8 @@ out/
 .vscode-test/
 .claude/
 package-lock.json
+
+# 敏感文件
+config.json
+*.credentials.json
+.env
