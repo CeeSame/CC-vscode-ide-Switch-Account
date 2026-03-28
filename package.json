@@ -1,0 +1,67 @@
+{
+  "name": "claude-account-switcher",
+  "displayName": "Claude Account Switcher",
+  "description": "在多个 Claude Code 账户之间一键切换，无需重复登录",
+  "version": "0.1.0",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "claude-switcher.switch",
+        "title": "Switch Claude Account/Provider",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.add",
+        "title": "Add Claude Account",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.remove",
+        "title": "Remove Claude Account",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.whoami",
+        "title": "Show Current Claude Account",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.usage",
+        "title": "Show Usage Dashboard",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.addProvider",
+        "title": "Add API Provider",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.switchProvider",
+        "title": "Switch API Provider",
+        "category": "Claude"
+      },
+      {
+        "command": "claude-switcher.removeProvider",
+        "title": "Remove API Provider",
+        "category": "Claude"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.0.0"
+  }
+}
