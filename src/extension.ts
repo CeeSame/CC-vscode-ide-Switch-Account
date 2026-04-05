@@ -366,6 +366,8 @@ function switchToApiProvider(name: string): void {
     } catch {}
   }
   settings.env = settings.env || {};
+  // __cas 标记表示此 env 块由本扩展写入，避免误清除 cc-switch 等工具的配置
+  (settings.env as Record<string, string>).__cas = '1';
   (settings.env as Record<string, string>).ANTHROPIC_API_KEY = provider.apiKey;
   (settings.env as Record<string, string>).ANTHROPIC_BASE_URL = provider.baseUrl;
 
@@ -397,8 +399,10 @@ function clearApiProviderSettings(): void {
     const settings: Record<string, unknown> = JSON.parse(fs.readFileSync(CLAUDE_SETTINGS, 'utf-8'));
     if (settings.env) {
       const env = settings.env as Record<string, unknown>;
-      // 清除所有可能的 API Provider 环境变量
+      // 只清除由本扩展写入的配置（__cas 标记），避免误删 cc-switch 等工具的配置
+      if (!env.__cas) { return; }
       const keysToClean = [
+        '__cas',
         'ANTHROPIC_API_KEY',
         'ANTHROPIC_AUTH_TOKEN',
         'ANTHROPIC_BASE_URL',
