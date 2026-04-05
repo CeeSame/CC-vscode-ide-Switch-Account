@@ -879,6 +879,19 @@ async function loginNewAccount(): Promise<void> {
     if (fs.existsSync(credPath)) {
       clearInterval(poll);
       let autoName = '';
+
+      // .claude.json 可能在 credentials 出现后数秒才写入，等待最多 5 秒
+      await new Promise<void>((resolve) => {
+        let waited = 0;
+        const waitForClaudeJson = setInterval(() => {
+          waited += 500;
+          if (fs.existsSync(claudeJsonPath) || waited >= 5000) {
+            clearInterval(waitForClaudeJson);
+            resolve();
+          }
+        }, 500);
+      });
+
       if (fs.existsSync(claudeJsonPath)) {
         try {
           const claudeJson = JSON.parse(fs.readFileSync(claudeJsonPath, 'utf-8')) as ClaudeJson;
