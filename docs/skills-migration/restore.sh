@@ -93,6 +93,16 @@ for project_dir in "$PROJECT_SKILLS_SRC"/*/; do
         echo "  ✅ 使用指南.md → $target_path/写剧本和分镜/SLG买量项目/"
       fi
     fi
+    # 复制 魔法书项目/
+    if [ -d "$project_dir/魔法书项目" ]; then
+      dest_magic="$target_path/魔法书项目"
+      if [ -d "$dest_magic" ]; then
+        echo "  ⚠  魔法书项目/ 已存在，跳过"
+      else
+        cp -r "$project_dir/魔法书项目" "$dest_magic"
+        echo "  ✅ 魔法书项目/ → $dest_magic"
+      fi
+    fi
   fi
   echo ""
 done
