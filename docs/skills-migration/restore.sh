@@ -72,6 +72,27 @@ for project_dir in "$PROJECT_SKILLS_SRC"/*/; do
         echo "  ✅ CLAUDE.md → $target_path/CLAUDE.md"
       fi
     fi
+    # 复制项目说明指引.md
+    if [ -f "$project_dir/项目说明指引.md" ]; then
+      if [ -f "$target_path/项目说明指引.md" ]; then
+        echo "  ⚠  项目说明指引.md 已存在，跳过"
+      else
+        cp "$project_dir/项目说明指引.md" "$target_path/项目说明指引.md"
+        echo "  ✅ 项目说明指引.md → $target_path/"
+      fi
+    fi
+    # 复制 写剧本和分镜/SLG买量项目/使用指南.md
+    local_guide="$project_dir/写剧本和分镜/SLG买量项目/使用指南.md"
+    if [ -f "$local_guide" ]; then
+      dest_guide="$target_path/写剧本和分镜/SLG买量项目/使用指南.md"
+      if [ -f "$dest_guide" ]; then
+        echo "  ⚠  使用指南.md 已存在，跳过"
+      else
+        mkdir -p "$target_path/写剧本和分镜/SLG买量项目"
+        cp "$local_guide" "$dest_guide"
+        echo "  ✅ 使用指南.md → $target_path/写剧本和分镜/SLG买量项目/"
+      fi
+    fi
   fi
   echo ""
 done
