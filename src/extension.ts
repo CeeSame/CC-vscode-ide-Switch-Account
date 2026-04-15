@@ -343,6 +343,14 @@ async function switchToAccount(name: string): Promise<void> {
 
   fs.mkdirSync(CLAUDE_DIR, { recursive: true });
   fs.copyFileSync(credPath, CLAUDE_CREDS); // 此时已是最新 token
+
+  // 同时替换 .claude.json，防止身份标识与 token 不一致导致登录记录丢失
+  const srcClaudeJson = getAccountClaudeJsonPath(name);
+  const dstClaudeJson = path.join(CLAUDE_DIR, '.claude.json');
+  if (fs.existsSync(srcClaudeJson)) {
+    try { fs.copyFileSync(srcClaudeJson, dstClaudeJson); } catch {}
+  }
+
   config.currentAccount = name;
   config.currentApiProvider = undefined; // 清除 API Provider 模式
   saveConfig(config);
